@@ -1,5 +1,13 @@
-## 코드 설명
+# 어셈블러르 hi 출력하기
 
+### 프로젝트 폴더 만들기
+```
+mkdir os-dev
+cd os-dev
+touch boot.asm
+```
+
+### hi 출력하기
 ```
 [BITS 16]
 ORG 0x7C00
@@ -29,3 +37,13 @@ dw 0xAA55, 0xAA
 - **jmp $**: 무한 루프로 빠져들어, 프로그램이 끝난 후 다른 동작을 막음.
 - **times ... db 0**: 부트 섹터 크기를 512바이트로 맞추기 위해 빈 공간을 0으로 채움.
 - **dw 0xAA55**: 부트 시그니처로, BIOS가 부팅 가능한 코드임을 인식하도록 함.
+
+### 컴파일하기
+```
+nasm -f bin boot.asm -o boot.bin
+```
+
+### 실행하기 (QEMU : 가상 머신 에뮬레이터, 운영체제를 테스트할 때 사용)
+```
+qemu-system-x86_64 -drive format=raw,file=boot.bin
+```
